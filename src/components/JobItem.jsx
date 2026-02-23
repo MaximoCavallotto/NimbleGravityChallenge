@@ -1,0 +1,33 @@
+import { useState } from "react";
+
+export function JobItem({ job }) {
+  const [repoUrl, setRepoUrl] = useState("");
+  const [error, setError] = useState(null);
+
+  const handleSubmit = () => {
+    if (repoUrl === "") {
+      setError("Ingrese el link a su repositorio en GitHub");
+      return;
+    }
+    setError(null);
+
+    setRepoUrl("");
+  };
+
+  return (
+    <article>
+      <h4>{job.title}</h4>
+      <input
+        type="url"
+        name="githubRepoUrl"
+        placeholder="Url de tu repositorio en GitHub"
+        value={repoUrl}
+        onChange={(e) => setRepoUrl(e.target.value)}
+      />
+      <button type="button" onClick={handleSubmit}>
+        Aplicar
+      </button>
+      {error ? <p className="error-text">{error}</p> : null}
+    </article>
+  );
+}

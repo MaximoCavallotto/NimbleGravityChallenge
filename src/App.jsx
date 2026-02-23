@@ -1,5 +1,6 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { CandidateProfile } from "./components/CandidateProfile";
+import { JobItem } from "./components/JobItem";
 
 const BASE_URL =
   "https://botfilter-h5ddh6dye8exb7ha.centralus-01.azurewebsites.net";
@@ -7,6 +8,8 @@ const BASE_URL =
 function App() {
   const [candidate, setCandidate] = useState(null);
   const [searchError, setSearchError] = useState(null);
+
+  const [jobsList, setJobsList] = useState([]);
 
   const searchCandidate = (email) => {
     setCandidate(null);
@@ -26,6 +29,13 @@ function App() {
         setSearchError("No se encontró un candidato con ese email");
       });
   };
+
+  useEffect(() => {
+    fetch(BASE_URL + "/api/jobs/get-list")
+      .then((response) => response.json())
+      .then((data) => setJobsList(data));
+  }, []);
+
   return (
     <>
       <CandidateProfile
@@ -33,6 +43,9 @@ function App() {
         onSearch={searchCandidate}
         error={searchError}
       />
+      {jobsList.map((job) => (
+        <JobItem key={job.id} job={job} />
+      ))}
     </>
   );
 }
