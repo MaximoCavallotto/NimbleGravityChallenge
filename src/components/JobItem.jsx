@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-export function JobItem({ job }) {
+export function JobItem({ job, onApply }) {
   const [repoUrl, setRepoUrl] = useState("");
   const [error, setError] = useState(null);
 
@@ -10,7 +10,7 @@ export function JobItem({ job }) {
       return;
     }
     setError(null);
-
+    onApply(job.id, repoUrl);
     setRepoUrl("");
   };
 

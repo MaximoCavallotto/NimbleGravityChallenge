@@ -32,6 +32,37 @@ function App() {
       });
   };
 
+  const applyToJob = (jobId, repourl) => {
+    if (!candidate) {
+      alert("Ingresa tu mail en la búsqueda antes de aplicar");
+      return;
+    }
+
+    const payload = {
+      uuid: candidate.uuid,
+      jobId: jobId,
+      candidateId: candidate.candidateId,
+      repoUrl: repourl,
+    };
+
+    fetch("endpoint post", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(payload),
+    })
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error("Falló la postulación");
+        }
+        alert("Postulación exitosa!");
+      })
+      .catch(() => {
+        alert("Hubo un error al enviar la postulación");
+      });
+  };
+
   useEffect(() => {
     fetch(BASE_URL + "/api/jobs/get-list")
       .then((response) => response.json())
@@ -61,7 +92,7 @@ function App() {
         error={searchError}
       />
       {jobsList.map((job) => (
-        <JobItem key={job.id} job={job} />
+        <JobItem key={job.id} job={job} onApply={applyToJob} />
       ))}
     </>
   );
