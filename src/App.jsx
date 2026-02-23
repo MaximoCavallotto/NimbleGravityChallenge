@@ -43,10 +43,11 @@ function App() {
       uuid: candidate.uuid,
       jobId: jobId,
       candidateId: candidate.candidateId,
+      applicationId: candidate.applicationId,
       repoUrl: repourl,
     };
 
-    fetch("endpoint post", {
+    fetch(BASE_URL + "/api/candidate/apply-to-job", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
