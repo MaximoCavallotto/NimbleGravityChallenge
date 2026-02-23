@@ -10,6 +10,8 @@ function App() {
   const [searchError, setSearchError] = useState(null);
 
   const [jobsList, setJobsList] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const [jobsError, setJobsError] = useState(null);
 
   const searchCandidate = (email) => {
     setCandidate(null);
@@ -33,8 +35,23 @@ function App() {
   useEffect(() => {
     fetch(BASE_URL + "/api/jobs/get-list")
       .then((response) => response.json())
-      .then((data) => setJobsList(data));
+      .then((data) => {
+        setJobsList(data);
+        setIsLoading(false);
+      })
+      .catch(() => {
+        setJobsError("Hubo un problema al cargar los trabajos.");
+        setIsLoading(false);
+      });
   }, []);
+
+  if (isLoading) {
+    return <h2>Cargando posiciones...</h2>;
+  }
+
+  if (jobsError) {
+    return <h2>{jobsError}</h2>;
+  }
 
   return (
     <>
