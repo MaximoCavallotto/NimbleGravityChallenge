@@ -1,4 +1,5 @@
 import { useState } from "react";
+import "./CandidateProfile.css";
 
 export function CandidateProfile({ candidate, onSearch, error }) {
   const [candidateEmail, setCandidateEmail] = useState("");
@@ -12,31 +13,32 @@ export function CandidateProfile({ candidate, onSearch, error }) {
   };
 
   return (
-    <article>
+    <article className="candidate-container">
       <h2>Buscador de candidato</h2>
-      <input
-        type="email"
-        placeholder="Ingresá tu email para buscar"
-        value={candidateEmail}
-        onChange={(e) => setCandidateEmail(e.target.value)}
-      />
+      <div className="candidate-searcher">
+        <input
+          type="email"
+          placeholder="Ingresá tu email para buscar"
+          value={candidateEmail}
+          onChange={(e) => setCandidateEmail(e.target.value)}
+        />
 
-      <button type="button" onClick={handleSubmit}>
-        Buscar Candidato
-      </button>
-
+        <button type="button" onClick={handleSubmit}>
+          Buscar Candidato
+        </button>
+      </div>
       {error != null ? <p className="error-text">{error}</p> : null}
 
       <h3>
         {candidate?.firstName} {candidate?.lastName}
       </h3>
 
-      <div>
+      <div className="candidate-details">
         <label htmlFor="candidateuuid">UUID: </label>
         <input
           type="text"
           id="candidateuuid"
-          readOnly
+          disabled
           value={candidate?.uuid || ""}
         />
 
@@ -44,7 +46,7 @@ export function CandidateProfile({ candidate, onSearch, error }) {
         <input
           type="text"
           id="candidateId"
-          readOnly
+          disabled
           value={candidate?.candidateId || ""}
         />
 
@@ -52,7 +54,7 @@ export function CandidateProfile({ candidate, onSearch, error }) {
         <input
           type="text"
           id="applicationId"
-          readOnly
+          disabled
           value={candidate?.applicationId || ""}
         />
 
@@ -60,7 +62,7 @@ export function CandidateProfile({ candidate, onSearch, error }) {
         <input
           type="text"
           id="firstName"
-          readOnly
+          disabled
           value={candidate?.firstName || ""}
         />
 
@@ -68,7 +70,7 @@ export function CandidateProfile({ candidate, onSearch, error }) {
         <input
           type="text"
           id="lastName"
-          readOnly
+          disabled
           value={candidate?.lastName || ""}
         />
       </div>

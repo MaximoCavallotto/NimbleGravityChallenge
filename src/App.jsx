@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { CandidateProfile } from "./components/CandidateProfile";
 import { JobItem } from "./components/JobItem";
+import "./App.css";
 
 const BASE_URL =
   "https://botfilter-h5ddh6dye8exb7ha.centralus-01.azurewebsites.net";
@@ -85,16 +86,17 @@ function App() {
   }
 
   return (
-    <>
+    <div className="app-container">
       <CandidateProfile
         candidate={candidate}
         onSearch={searchCandidate}
         error={searchError}
       />
+      <h3>Listado de trabajos: </h3>
       {jobsList.map((job) => (
         <JobItem key={job.id} job={job} onApply={applyToJob} />
       ))}
-    </>
+    </div>
   );
 }
 export default App;

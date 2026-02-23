@@ -1,4 +1,5 @@
 import { useState } from "react";
+import "./JobItem.css";
 
 export function JobItem({ job, onApply }) {
   const [repoUrl, setRepoUrl] = useState("");
@@ -15,7 +16,7 @@ export function JobItem({ job, onApply }) {
   };
 
   return (
-    <article>
+    <article className="job-item">
       <h4>{job.title}</h4>
       <input
         type="url"
